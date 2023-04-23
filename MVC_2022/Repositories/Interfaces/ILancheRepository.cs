@@ -2,6 +2,7 @@
 
 namespace MVC_2022.Repositories.Interfaces
 {
+    //Interface de lanche:
     public interface ILancheRepository
     {
         IEnumerable<Lanche> Lanches { get; }
