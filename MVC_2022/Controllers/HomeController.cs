@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 namespace MVC_2022.Controllers
 {
+    //Controller principal
     public class HomeController : Controller
     {
         public IActionResult Index()
