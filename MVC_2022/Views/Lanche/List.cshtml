@@ -1,0 +1,20 @@
+﻿@*Modelo que ira ser utilizado na tela, inserido via scafold pela ferramenta de adicionar view do .net.*@
+@model IEnumerable<MVC_2022.Models.Lanche>
+
+<div>
+    <h2> Todos os Lanches:</h2>
+</div>
+
+@*Valor passado no controle*@
+@foreach(var lanche in Model){
+
+    <div>
+        <h4>@lanche.LancheNome</h4>
+        <p>
+            <img src="@lanche.LancheImagemURL"/>
+        </p>
+        @*Parâmetro 'c' no ToString para formatar como moeda em real.*@
+        <h3>Preço: @lanche.LanchePreco.ToString("c")</h3>
+    </div>
+
+}
