@@ -1,20 +1,48 @@
 ﻿@*Modelo que ira ser utilizado na tela, inserido via scafold pela ferramenta de adicionar view do .net.*@
-@model IEnumerable<MVC_2022.Models.Lanche>
+@model LancheListViewModel
 
-<div>
-    <h2> Todos os Lanches:</h2>
-</div>
-
-@*Valor passado no controle*@
-@foreach(var lanche in Model){
-
-    <div>
-        <h4>@lanche.LancheNome</h4>
-        <p>
-            <img src="@lanche.LancheImagemURL"/>
-        </p>
-        @*Parâmetro 'c' no ToString para formatar como moeda em real.*@
-        <h3>Preço: @lanche.LanchePreco.ToString("c")</h3>
+<div class="container">
+    <div class="col-md-12 col-lg-12">
+        <h2> Todos os Lanches:</h2>
     </div>
+    <div class="row">
 
-}
+        @*Retorna valor da ViewBag do controller sobrevive a um request.*@
+        <div class="col-md-12 col-lg-12">
+            <p>@ViewBag.Observacao</p>
+        </div>
+
+        @*Retorna valor da ViewData do controller sobrevive a um request.*@
+        <div class="col-md-12 col-lg-12">
+            <p>@ViewData["obsData"]</p>
+        </div>
+
+        @*Precisa de validação. Retorna valor da TempData do controller Home, muito usado para notificações entre as telas e requisições, some após recuperar o valor.*@
+        @if (TempData.ContainsKey("obsTemp"))
+        {
+            <div class="col-md-12 col-lg-12">
+                <p>@TempData["obsTemp"]</p>
+            </div>
+        }
+
+        @*Recupera valor da ViewModel no controller.*@
+        <div class="col-md-12 col-lg-12">
+            <hr />
+            <h3>@Model.CategoriaAtual</h3>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        @*Valor passado no controle*@
+        @foreach(var lanche in Model.Lanches)
+        {
+            <div class="col-md-4 col-lg-4">
+                <p><img src="@lanche.LancheImagemURL" class="img-fluid" /></p>
+                @*Parâmetro 'c' no ToString para formatar como moeda em real.*@
+                <h3>@lanche.LanchePreco.ToString("c")</h3>
+                <h4>@lanche.LancheNome</h4>
+                <p>@lanche.LancheDescricaoCurta</p>
+            </div>
+        }
+    </div>
+</div>

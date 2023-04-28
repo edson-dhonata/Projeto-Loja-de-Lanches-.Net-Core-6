@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVC_2022.Repositories.Interfaces;
+using MVC_2022.ViewModels;
 
 namespace MVC_2022.Controllers
 {
@@ -14,8 +15,17 @@ namespace MVC_2022.Controllers
         }
         public IActionResult List()
         {
+            //Exemplo de ViewBag, ViewData
+            ViewBag.Observacao = "Observação vinda da ViewBag";
+            ViewData["obsData"] = "Observação da ViewData as " + DateTime.Now;
+
+            //Instancia classe ViewModel
+            LancheListViewModel info = new LancheListViewModel();
+            info.CategoriaAtual = "Lanche categoria atual";
+            info.Lanches = _lanche.Lanches;
+
             //Devolvendo lista de lanche para view.
-            return View(_lanche.Lanches); ;
+            return View(info); ;
         }
     }
 }

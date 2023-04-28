@@ -9,6 +9,7 @@ namespace MVC_2022.Controllers
     {
         public IActionResult Index()
         {
+            TempData["obsTemp"] = "Observação TemData HomeController.";
             return View();
         }
 
