@@ -36,13 +36,8 @@
         @*Valor passado no controle*@
         @foreach(var lanche in Model.Lanches)
         {
-            <div class="col-md-4 col-lg-4">
-                <p><img src="@lanche.LancheImagemURL" class="img-fluid" /></p>
-                @*Parâmetro 'c' no ToString para formatar como moeda em real.*@
-                <h3>@lanche.LanchePreco.ToString("c")</h3>
-                <h4>@lanche.LancheNome</h4>
-                <p>@lanche.LancheDescricaoCurta</p>
-            </div>
+            //Utilizando Parcial View. Quando na pasta Shared, fica utilizável em todas as views.
+            <partial name="_LanchesResumo" for="@lanche"/>
         }
     </div>
 </div>
