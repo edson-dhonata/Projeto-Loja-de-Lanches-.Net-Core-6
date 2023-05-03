@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVC_2022.Models
 {
@@ -16,6 +17,7 @@ namespace MVC_2022.Models
         public int Quantidade { get; set; }
 
         [Column("ITEM_CARRINHO_COMPRA_ID")]
+        [StringLength(200)]
         public string CarrinhoCompraId { get; set; }
     }
 }
