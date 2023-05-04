@@ -25,7 +25,7 @@ namespace MVC_2022.Controllers
             info.Lanches = _lanche.Lanches;
 
             //Devolvendo lista de lanche para view.
-            return View(info); ;
+            return View(info);
         }
     }
 }

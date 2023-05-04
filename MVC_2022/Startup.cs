@@ -38,8 +38,13 @@ public class Startup
 
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.AddControllersWithViews();
+
+        //Adicionando midwares de cache e session
+        services.AddMemoryCache();
+        services.AddSession();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +62,9 @@ public class Startup
         }
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+
+        //Usando session
+        app.UseSession();
 
         app.UseRouting();
 
