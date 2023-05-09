@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using MVC_2022.Context;
+using MVC_2022.Models;
 using MVC_2022.Repositories;
 using MVC_2022.Repositories.Interfaces;
 
@@ -18,9 +19,11 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        //Injetando DbContext
         services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+        #region Tipo de escopos
         //Criando o serviço de injeção de dependência de Lanches e Categorias para que os controladores possam ter acessos aos dados de forma mais eficiente
         //sem a necessidade de instaciar as classes.
 
@@ -35,16 +38,20 @@ public class Startup
 
         //3- Sungleton (services.AddSungleton<interface,repositório> ou <etc,etc>): Apenas uma instância do serviço é criada se ainda não estiver registrada como uma instância.
         // Um objeto do serviço é criado e fornecido para todas as requisições. Todas as requisições obtém o mesmoi objeto.
+        #endregion
 
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-        services.AddControllersWithViews();
+        //Cria um  serviço para gerar uma instancia do carrinho de compra.
+        services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
         //Adicionando midwares de cache e session
         services.AddMemoryCache();
         services.AddSession();
+
+        services.AddControllersWithViews();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
