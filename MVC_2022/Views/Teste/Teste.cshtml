@@ -1,0 +1,138 @@
+﻿@model MVC_2022.ViewModels.TesteEdson
+
+@{
+    ViewData["Title"] = "Teste";
+}
+
+<h1>Teste</h1>
+
+<h4>TesteEdson</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Insert">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="codigo" class="control-label"></label>
+                <input asp-for="codigo" class="form-control" />
+                <span asp-validation-for="codigo" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="nome" class="control-label"></label>
+                <input asp-for="nome" class="form-control" />
+                <span asp-validation-for="nome" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="dataNascimento" class="control-label"></label>
+                <input asp-for="dataNascimento" class="form-control" />
+                <span asp-validation-for="dataNascimento" class="text-danger"></span>
+            </div>
+
+            <hr />
+            <h4>Telefones: <input type="button" name="btnAddTel" id="btnAddTel" class="btn btn-info btn-sm" value="Adicionar" /> </h4>
+            <div id="divtelefones" class="row input-group">
+                <div class="telefone">
+                    <div class="col-md-12">
+                        <label for="tipo">Tipo:</label>
+                        <input type="text" id="tipo" class="input-group-text" name="telefones[0].tipo" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="numero">Número:</label>
+                        <input type="text" id="numero" class="input-group-text" name="telefones[0].numero" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="operadora">Operadora:</label>
+                        <input type="text" id="operadora" class="input-group-text" name="telefones[0].operadora" />
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <h4>Endereços: <input type="button" name="btnAddEnd" id="btnAddEnd" class="btn btn-info btn-sm" value="Adicionar" /></h4>
+            <div id="divEnderecos" class="row input-group">
+                <div class="endereco">
+                    <div class="col-md-12">
+                        <label for="cep">CEP:</label>
+                        <input type="text" id="cep" class="input-group-text" name="enderecos[0].cep" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="logradouro">Logradouro:</label>
+                        <input type="text" id="logradouro" class="input-group-text" name="enderecos[0].logradouro" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="bairro">Bairro:</label>
+                        <input type="text" id="bairro" class="input-group-text" name="enderecos[0].bairro" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="cidade">Cidade:</label>
+                        <input type="text" id="cidade" class="input-group-text" name="enderecos[0].cidade" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="estado">Estado:</label>
+                        <input type="text" id="estado" class="input-group-text" name="enderecos[0].estado" />
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script>
+    $(document).ready(function() {
+        // quando clicar no botão "Adicionar telefone"
+        var i = 1;
+        var x = 1;
+
+        $("#btnAddTel").click(function () {
+            
+            var clone = $(".telefone:first").clone();
+
+            clone.find("input").each(function() {
+                var newName = $(this).attr("name").replace(/\[(\d+)\]/, "[" + i + "]");
+                $(this).attr("name", newName);
+                $(this).val("");
+            });
+            var removeBtn = "<br/><input type='button' class='removeTelefone btn btn-danger btn-sm' value='Remover' />";
+            clone.append(removeBtn);
+            clone.appendTo("#divtelefones");
+            i++;
+            
+        });
+
+        $("#divtelefones").on("click", ".removeTelefone", function () {            
+            $(this).closest(".telefone").hide();
+        });
+
+        // quando clicar no botão "Adicionar telefone"
+        $("#btnAddEnd").click(function () {
+            
+            var clone= $(".endereco:first").clone();
+
+            clone.find("input").each(function () {
+                var newName = $(this).attr("name").replace(/\[(\d+)\]/, "[" + x + "]");
+                $(this).attr("name", newName);
+                $(this).val("");
+            });
+
+            var removeBtn = "<br/><input type='button' class='removeEndereco btn btn-danger btn-sm' value='Remover' />";
+            clone.append(removeBtn);
+            clone.appendTo("#divEnderecos");
+            x++;
+            
+        });
+
+        $("#divEnderecos").on("click", ".removeEndereco", function () {
+            $(this).closest(".endereco").hide();
+        });
+    });
+</script>
+
