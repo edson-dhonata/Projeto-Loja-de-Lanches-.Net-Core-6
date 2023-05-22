@@ -1,5 +1,18 @@
-﻿<h1>Bem Vindo!</h1>
+﻿@model HomeViewModel
+
+<h1>Bem Vindo!</h1>
 
 <!--Implementa partial view, criada na pasta Shared-->
 <partial name="_Carousel"/>
- 
+
+<h2>Os preferidos da semana:</h2> 
+<h4>Tá com fome???</h4>
+
+<div class="row">
+
+    @foreach (var lanche in Model.LanchesPreferidos)
+    {
+        <partial name="_LanchesResumo" for="@lanche" />    
+    }
+
+</div>
