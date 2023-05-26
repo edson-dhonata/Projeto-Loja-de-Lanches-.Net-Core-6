@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MessagePack.Formatters;
+using Microsoft.AspNetCore.Mvc;
+using MVC_2022.Models;
+using MVC_2022.Repositories;
 using MVC_2022.Repositories.Interfaces;
 using MVC_2022.ViewModels;
 
@@ -13,19 +16,44 @@ namespace MVC_2022.Controllers
         {
             _lanche = lanche;
         }
-        public IActionResult List()
+
+        //Recebe nome da categoria como parâmetro atraves de rota.
+        public IActionResult List(string categoria)
         {
-            //Exemplo de ViewBag, ViewData
-            ViewBag.Observacao = "Observação vinda da ViewBag";
-            ViewData["obsData"] = "Observação da ViewData as " + DateTime.Now;
+            IEnumerable<Lanche> lanches;
+            string categoriaAtual = string.Empty;
 
-            //Instancia classe ViewModel
-            LancheListViewModel info = new LancheListViewModel();
-            info.CategoriaAtual = "Lanche categoria atual";
-            info.Lanches = _lanche.Lanches;
+            if (string.IsNullOrEmpty(categoria))
+            {
+                lanches = _lanche.Lanches.OrderBy(l => l.LancheId);
+                categoriaAtual = "Todos os lanches";
+            }
+            else
+            {
+                //Compara se o nome da categoria e igual a Normal e ignora CaseSensitive
+                if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
+                {
+                    lanches = _lanche.Lanches
+                        .Where(l => l.Categoria.CategoriaNome.Equals("Normal"))
+                        .OrderBy(l => l.LancheNome);
+                }
+                else
+                {
+                    lanches = _lanche.Lanches
+                       .Where(l => l.Categoria.CategoriaNome.Equals("Natural"))
+                       .OrderBy(l => l.LancheNome);
+                }
+                categoriaAtual = categoria;
+            }
 
-            //Devolvendo lista de lanche para view.
-            return View(info);
+            //Cria instância da view model e manda para view.
+            var lanchesListViewModel = new LancheListViewModel
+            {
+                Lanches = lanches,
+                CategoriaAtual = categoriaAtual
+            };
+
+            return View(lanchesListViewModel);
         }
     }
 }
