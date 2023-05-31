@@ -77,11 +77,18 @@ public class Startup
 
         app.UseAuthorization();
 
+        //Define rotas para meus controllers:
         app.UseEndpoints(endpoints =>
         {
+            //Rota para listar lanche pela categoria
+            endpoints.MapControllerRoute(
+                name: "categoriaFiltro",
+                pattern: "Lanche/{action}/{categoria?}",
+                defaults: new { Controller = "Lanche", action = "List" });
+
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-        });
+        }); 
     }
 }
