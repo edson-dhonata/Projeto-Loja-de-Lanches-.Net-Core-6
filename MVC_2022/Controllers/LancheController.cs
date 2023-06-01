@@ -11,39 +11,34 @@ namespace MVC_2022.Controllers
     {
         //Injeção de dependencia da interface de lanche criada na startap.
         private readonly ILancheRepository _lanche;
+        private readonly ICategoriaRepository _categoria;
 
-        public LancheController(ILancheRepository lanche)
+        public LancheController(ILancheRepository lanche, ICategoriaRepository categoria)
         {
             _lanche = lanche;
+            _categoria = categoria;
         }
 
         //Recebe nome da categoria como parâmetro atraves de rota.
-        public IActionResult List(string categoria)
+        public IActionResult List(int categoria)
         {
             IEnumerable<Lanche> lanches;
             string categoriaAtual = string.Empty;
 
-            if (string.IsNullOrEmpty(categoria))
+            if (categoria == 0)
             {
                 lanches = _lanche.Lanches.OrderBy(l => l.LancheId);
                 categoriaAtual = "Todos os lanches";
             }
             else
             {
-                //Compara se o nome da categoria e igual a Normal e ignora CaseSensitive
-                if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
-                {
-                    lanches = _lanche.Lanches
-                        .Where(l => l.Categoria.CategoriaNome.Equals("Normal"))
-                        .OrderBy(l => l.LancheNome);
-                }
-                else
-                {
-                    lanches = _lanche.Lanches
-                       .Where(l => l.Categoria.CategoriaNome.Equals("Integral"))
-                       .OrderBy(l => l.LancheNome);
-                }
-                categoriaAtual = categoria;
+                //Pega lanches com base na categoria:
+                lanches = _lanche.Lanches
+                                        .Where(l => l.Categoria.CategoriaId == categoria)
+                                        .OrderBy(l => l.LancheNome);
+
+                //Pega categoria atual do lanche:
+                categoriaAtual = _categoria.Categorias.FirstOrDefault(x => x.CategoriaId == categoria).CategoriaNome;
             }
 
             //Cria instância da view model e manda para view.
@@ -54,6 +49,13 @@ namespace MVC_2022.Controllers
             };
 
             return View(lanchesListViewModel);
+        }
+
+        //Método que exibe detalhes dos lanches
+        public IActionResult Details(int lancheId)
+        {
+            var lanche = _lanche.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
+            return View(lanche);
         }
     }
 }

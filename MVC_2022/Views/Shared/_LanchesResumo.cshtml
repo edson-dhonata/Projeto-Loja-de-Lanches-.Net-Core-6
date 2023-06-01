@@ -1,9 +1,20 @@
 ﻿@model Lanche
 
 <div class="col-md-4 col-lg-4">
-    <p><img src="@Model.LancheImagemURL" class="img-fluid" /></p>
+    <p><img src="@Model.LancheImagemURL" class="img-fluid" style="width:150px;"/></p>
     @*Parâmetro 'c' no ToString para formatar como moeda em real.*@
     <h3>@Model.LanchePreco.ToString("c")</h3>
-    <h4>@Model.LancheNome</h4>
+
+    @*Link para acionar controllador  Lanche, action Details passando como parâmetro o ID do Lanche.*@
+    <h4>
+        <a asp-controller="Lanche" asp-action="Details" asp-route-lancheId="@Model.LancheId">@Model.LancheNome</a>
+    </h4>
     <p>@Model.LancheDescricaoCurta...</p>
+    <div>
+        <p class="button">
+            <a class="btn btn-primary" id="cartButton" asp-controller="CarrinhoCompra" asp-action="AdicionarItemNoCarrinhoCompra" asp-route-LancheId="@Model.LancheId">
+                Incluir no Carrinho
+            </a>
+        </p>
+    </div>
 </div>
