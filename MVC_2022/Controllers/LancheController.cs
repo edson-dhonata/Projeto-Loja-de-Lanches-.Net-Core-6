@@ -40,7 +40,7 @@ namespace MVC_2022.Controllers
                 else
                 {
                     lanches = _lanche.Lanches
-                       .Where(l => l.Categoria.CategoriaNome.Equals("Natural"))
+                       .Where(l => l.Categoria.CategoriaNome.Equals("Integral"))
                        .OrderBy(l => l.LancheNome);
                 }
                 categoriaAtual = categoria;
