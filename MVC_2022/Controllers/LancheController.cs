@@ -57,5 +57,35 @@ namespace MVC_2022.Controllers
             var lanche = _lanche.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
             return View(lanche);
         }
+
+        //Nome do parâmetro aqui tem que estar igual o nome da viewdata no campo search
+        public ViewResult Search(string searchString)
+        {
+            IEnumerable<Lanche> lanches;
+            string categoriaAtual = string.Empty;
+
+            if (string.IsNullOrEmpty(searchString))
+            {
+                lanches = _lanche.Lanches.OrderBy(p => p.LancheId);
+                categoriaAtual = "Todos os Lanches";
+            }
+            else
+            {
+                lanches = _lanche.Lanches
+                          .Where(p => p.LancheNome.ToLower().Contains(searchString.ToLower()));
+
+                //Se contiver lanche retornado.
+                if (lanches.Any())
+                    categoriaAtual = "Lanches";
+                else
+                    categoriaAtual = "Nenhum lanche foi encontrado";
+            }
+
+            return View("~/Views/Lanche/List.cshtml", new LancheListViewModel
+            {
+                Lanches = lanches,
+                CategoriaAtual = categoriaAtual
+            });
+        }
     }
 }
