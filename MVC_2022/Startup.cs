@@ -1,9 +1,11 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVC_2022.Context;
 using MVC_2022.Models;
 using MVC_2022.Repositories;
 using MVC_2022.Repositories.Interfaces;
+
 
 namespace MVC_2022;
 
@@ -22,6 +24,22 @@ public class Startup
         //Injetando DbContext
         services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+        //Caso queira alterar a políticade senha do identity
+        services.Configure<IdentityOptions>(options => { 
+        
+            //Padrão de política de senha do identity
+            options.Password.RequireDigit= true;
+            options.Password.RequireLowercase= true;
+            options.Password.RequireNonAlphanumeric = true;
+            options.Password.RequireUppercase= true;
+            options.Password.RequiredLength= 8;
+            options.Password.RequiredUniqueChars = 1;
+        });
 
         #region Tipo de escopos
         //Criando o serviço de injeção de dependência de Lanches e Categorias para que os controladores possam ter acessos aos dados de forma mais eficiente
@@ -76,6 +94,7 @@ public class Startup
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         //Define rotas para meus controllers:

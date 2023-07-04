@@ -54,5 +54,48 @@ namespace MVC_2022.Controllers
             ModelState.AddModelError("", "Falha ao realizar o login!!");
             return View(loginVM);
         }
+
+        //Método get que retorna a view do registro
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        //Método de postagem do formulário Register
+        //Tag ValidateAntiForgeryToken para evitar falsas requisições para nossa aplicação, validando o token gerado e incluido no formulário.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(LoginViewModel registroVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser { UserName = registroVM.UserName };
+                var result = await _userManager.CreateAsync(user, registroVM.Password);
+
+                if (result.Succeeded)
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Login", "Account");
+                else
+                    this.ModelState.AddModelError("Registro", "Falha ao registrar o usuário");
+            }
+            return View(registroVM);
+        }
+
+        //Método de logout
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            //Limpa os objetos da sessão.
+            HttpContext.Session.Clear();
+
+            //Limpa o usuário da sessão.
+            HttpContext.User = null;
+
+            //Faz logout no site.
+            await _signInManager.SignOutAsync();
+
+            //Redireciona para a home do website.
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
