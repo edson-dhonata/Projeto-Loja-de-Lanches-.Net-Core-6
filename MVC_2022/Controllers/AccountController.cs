@@ -73,8 +73,11 @@ namespace MVC_2022.Controllers
                 var result = await _userManager.CreateAsync(user, registroVM.Password);
 
                 if (result.Succeeded)
+                {
                     //await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _userManager.AddToRoleAsync(user, "Member");
                     return RedirectToAction("Login", "Account");
+                }
                 else
                     this.ModelState.AddModelError("Registro", "Falha ao registrar o usuário");
             }

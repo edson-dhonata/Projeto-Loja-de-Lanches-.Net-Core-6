@@ -5,7 +5,7 @@ using MVC_2022.Context;
 using MVC_2022.Models;
 using MVC_2022.Repositories;
 using MVC_2022.Repositories.Interfaces;
-
+using MVC_2022.Services;
 
 namespace MVC_2022;
 
@@ -63,6 +63,19 @@ public class Startup
         services.AddTransient<IPedidoRepository, PedidoRepository>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+        //Serviço de Seed inicial dos perfis e logins de usuário padrões.
+        services.AddScoped<ISeedUserRoleInitial,SeedUserRoleInitial>();
+
+        //Politica para adicionar os perfis.
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Admin",
+                politica =>
+                {
+                    politica.RequireRole("Admin");
+                });
+        });
+
         //Cria um  serviço para gerar uma instancia do carrinho de compra.
         services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
@@ -74,7 +87,7 @@ public class Startup
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISeedUserRoleInitial seedUserRoleInitial)
     {
         if (env.IsDevelopment())
         {
@@ -94,12 +107,23 @@ public class Startup
 
         app.UseRouting();
 
+        //Iniciando usuários padrões admin e member.
+        //Cria perfis
+        seedUserRoleInitial.SeedRoles();
+        //Cria usuários e atribui aos perfis criados
+        seedUserRoleInitial.SeedUsers();
+
         app.UseAuthentication();
         app.UseAuthorization();
 
         //Define rotas para meus controllers:
         app.UseEndpoints(endpoints =>
         {
+            //Mapeia rota de Area criada pelo próprio scaffolding.
+            endpoints.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+
             //Rota para listar lanche pela categoria
             endpoints.MapControllerRoute(
                 name: "categoriaFiltro",
