@@ -31,6 +31,11 @@
                         </div>
                     </form>
                     @await Html.PartialAsync("_loginPartial")
+
+                    @*Caso o usuário tenha o perfil de admin, esté link aparecerá para ele.*@
+                    @if(User.IsInRole("Admin")){
+                        <a class="nav-link text-light" asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
+                    }
                 </div>
             </div>
         </nav>

@@ -100,5 +100,12 @@ namespace MVC_2022.Controllers
             //Redireciona para a home do website.
             return RedirectToAction("Index", "Home");
         }
+
+        //Controller que redireciona um usuário caso ele não tenha o perfil de administrador. Este redirecionamento é feito automático pelo Identity
+        //Como ele redireciona para um controller AccessDenid estamos criando o mesmo aqui.
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
