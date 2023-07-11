@@ -5,7 +5,7 @@ namespace MVC_2022.Areas.Admin.Controllers
 {
     //Define em qual area esse controlador pertence.
     [Area("Admin")]
-    [Authorize("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         public IActionResult Index()
