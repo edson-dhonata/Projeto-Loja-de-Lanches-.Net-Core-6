@@ -6,6 +6,7 @@ using MVC_2022.Models;
 using MVC_2022.Repositories;
 using MVC_2022.Repositories.Interfaces;
 using MVC_2022.Services;
+using ReflectionIT.Mvc.Paging;
 
 namespace MVC_2022;
 
@@ -84,6 +85,13 @@ public class Startup
         services.AddSession();
 
         services.AddControllersWithViews();
+
+        //Adicionando serviço de páginação do Nuget ReflectionIT.
+        services.AddPaging(options =>
+        {
+            options.ViewName = "Bootstrap4";
+            options.PageParameterName = "pageindex";
+        });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

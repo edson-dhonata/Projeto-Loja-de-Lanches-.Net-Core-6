@@ -3,13 +3,10 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>Lanche</h4>
+<h3>Criar Produto</h3>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-10">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -19,12 +16,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="LancheDescricaoCurta" class="control-label"></label>
-                <input asp-for="LancheDescricaoCurta" class="form-control" />
+                <textarea asp-for="LancheDescricaoCurta" class="form-control"></textarea>
                 <span asp-validation-for="LancheDescricaoCurta" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LancheDescricaoDetalhada" class="control-label"></label>
-                <input asp-for="LancheDescricaoDetalhada" class="form-control" />
+                <textarea asp-for="LancheDescricaoDetalhada" class="form-control"></textarea>
                 <span asp-validation-for="LancheDescricaoDetalhada" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -42,28 +39,33 @@
                 <input asp-for="LancheImagemThumbnailURL" class="form-control" />
                 <span asp-validation-for="LancheImagemThumbnailURL" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="LancheIsPreferido" /> @Html.DisplayNameFor(model => model.LancheIsPreferido)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="LancheEmEstoque" /> @Html.DisplayNameFor(model => model.LancheEmEstoque)
-                </label>
+            <div class="row">
+                <div class="form-group form-check col-md-4">
+                    <label class="control-label">Marcar como Preferido?</label>
+                    <br />
+                    <label class="form-check-label" style="padding-left: 20px">
+                        <input class="form-check-input" asp-for="LancheIsPreferido" /> @Html.DisplayNameFor(model => model.LancheIsPreferido)
+                    </label>
+                </div>
+                <div class="form-group form-check col-md-4">
+                    <label class="control-label">Marcar como em Estoque?</label>
+                    <br />
+                    <label class="form-check-label" style="padding-left: 20px">
+                        <input class="form-check-input" asp-for="LancheEmEstoque" /> @Html.DisplayNameFor(model => model.LancheEmEstoque)
+                    </label>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="CategoriaId" class="control-label"></label>
+                    <select asp-for="CategoriaId" class="form-control" asp-items="ViewBag.CategoriaId"></select>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="CategoriaId" class="control-label"></label>
-                <select asp-for="CategoriaId" class ="form-control" asp-items="ViewBag.CategoriaId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Criar Produto" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-outline-info">Retornar</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 

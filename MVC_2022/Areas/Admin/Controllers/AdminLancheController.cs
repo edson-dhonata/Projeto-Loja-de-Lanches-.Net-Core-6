@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC_2022.Context;
 using MVC_2022.Models;
+using ReflectionIT.Mvc.Paging;
 
 namespace MVC_2022.Areas.Admin.Controllers
 {
@@ -24,10 +25,24 @@ namespace MVC_2022.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminLanche
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var appDbContext = _context.Lanches.Include(l => l.Categoria);
+        //    return View(await appDbContext.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "LancheNome")
         {
-            var appDbContext = _context.Lanches.Include(l => l.Categoria);
-            return View(await appDbContext.ToListAsync());
+            var resultado = _context.Lanches.Include(l => l.Categoria).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                resultado = resultado.Where(p => p.LancheNome.Contains(filter));
+            }
+
+            var model = await PagingList.CreateAsync(resultado, 3, pageindex, sort, "LancheNome");
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+            return View(model);
         }
 
         // GET: Admin/AdminLanche/Details/5
@@ -52,7 +67,7 @@ namespace MVC_2022.Areas.Admin.Controllers
         // GET: Admin/AdminLanche/Create
         public IActionResult Create()
         {
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaDescricao");
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome");
             return View();
         }
 
@@ -69,7 +84,7 @@ namespace MVC_2022.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaDescricao", lanche.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
             return View(lanche);
         }
 
@@ -86,7 +101,7 @@ namespace MVC_2022.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaDescricao", lanche.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome", lanche.CategoriaId);
             return View(lanche);
         }
 

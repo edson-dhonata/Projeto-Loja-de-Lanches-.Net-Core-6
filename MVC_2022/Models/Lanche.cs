@@ -54,6 +54,7 @@ namespace MVC_2022.Models
 
         //Definindo relacionamento para que crie uma FK na tabela de lanche de CategoriaId
         [Column("LANCHE_CATEGORIA_ID")]
+        [Display(Name ="Categoria")]
         public int CategoriaId { get; set; }
         public virtual Categoria Categoria { get; set; }    
     }
