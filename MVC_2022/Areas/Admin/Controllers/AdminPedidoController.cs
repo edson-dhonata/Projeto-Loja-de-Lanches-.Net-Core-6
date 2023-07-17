@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC_2022.Context;
 using MVC_2022.Models;
+using MVC_2022.ViewModels;
 using ReflectionIT.Mvc.Paging;
 
 namespace MVC_2022.Areas.Admin.Controllers
@@ -32,6 +33,28 @@ namespace MVC_2022.Areas.Admin.Controllers
 
         //Implementação do método index com páginação de dados usando ReflectionIT
         //Parâmetros: Filter: Campo de filtro da view, pageindex: index da página e sort: ordenação.
+
+        public IActionResult PedidoLanches(int? id)
+        {
+            var pedido = _context.Pedidos
+                         .Include(pd => pd.PedidoItens)
+                         .ThenInclude(l => l.Lanche)
+                         .FirstOrDefault(p => p.PedidoId == id);
+
+            if (pedido == null)
+            {
+                Response.StatusCode = 404;
+                return View("PedidoNotFound", id.Value);
+            }
+
+            PedidoLancheViewModel pedidoLanches = new PedidoLancheViewModel()
+            {
+                Pedido = pedido,
+                PedidoDetalhes = pedido.PedidoItens
+            };
+            return View(pedidoLanches);
+        }
+
         public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Nome")
         {
             var resultado = _context.Pedidos.AsNoTracking()

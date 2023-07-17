@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MVC_2022.Areas.Admin.Services;
 using MVC_2022.Context;
 using MVC_2022.Models;
 using MVC_2022.Repositories;
@@ -66,6 +67,9 @@ public class Startup
 
         //Serviço de Seed inicial dos perfis e logins de usuário padrões.
         services.AddScoped<ISeedUserRoleInitial,SeedUserRoleInitial>();
+
+        //Criando servico para injetar método no controller, como não tem interface.
+        services.AddScoped<RelatorioVendasService>();
 
         //Politica para adicionar os perfis.
         services.AddAuthorization(options =>
