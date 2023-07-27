@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVC_2022.Areas.Admin.Services;
@@ -30,6 +31,9 @@ public class Startup
         services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+        //Criando o serviço para pegar o caminho da pasta de imagens.
+        services.Configure<ConfigurationImagens>(Configuration.GetSection("ConfigurationPastaImagens"));
 
         //Caso queira alterar a políticade senha do identity
         services.Configure<IdentityOptions>(options => { 
@@ -112,6 +116,10 @@ public class Startup
             app.UseHsts();
         }
         app.UseHttpsRedirection();
+
+        //Permitir o acesso e também utilizado para servir arquivos estáticos(como HTML, CSS, JavaScript, imagens, entre outros)
+        //diretamente do sistema de arquivos do servidor web ao cliente,
+        //sem a necessidade de processamento adicional ou processamento do servidor.
         app.UseStaticFiles();
 
         //Usando session
