@@ -74,6 +74,7 @@ public class Startup
 
         //Criando servico para injetar método no controller, como não tem interface.
         services.AddScoped<RelatorioVendasService>();
+        services.AddScoped<GraficoVendasService>();
 
         //Politica para adicionar os perfis.
         services.AddAuthorization(options =>
