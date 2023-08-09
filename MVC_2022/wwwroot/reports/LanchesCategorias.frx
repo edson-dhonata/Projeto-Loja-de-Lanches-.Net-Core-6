@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/08/2023 23:16:05" ReportInfo.Modified="08/08/2023 23:42:52" ReportInfo.CreatorVersion="2023.2.0.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqM7gJFg/iaLrqMhRfGy5lGgaaYiHNYVZJmJ0+/Ir/d2ZrMOmu2yLsYYwRItj4qJItYkTDz3oUd07RaHX/3ZjHSaIG6J3YR19w5ttAkAWCGm+P2g6vqmv8PPYss24h8A3/SVerkms4hO6A4kL8ReceuUF/PCOExI+2mULs/BFphZr+l2VHYMqMrU3XOXs9XokUeDafL8OkPGVIr75jo1jFSkDxMN3RrKmFnqkCnE9xEpA=">
+      <TableDataSource Name="TB_CATEGORIAS" DataType="System.Int32" Enabled="true" TableName="TB_CATEGORIAS">
+        <Column Name="CATEGORIA_ID" DataType="System.Int32"/>
+        <Column Name="CATEGORIA_NOME" DataType="System.String"/>
+        <Column Name="CATEGORIA_DESCRICAO" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="TB_LANCHES" DataType="System.Int32" Enabled="true" TableName="TB_LANCHES">
+        <Column Name="LANCHE_ID" DataType="System.Int32"/>
+        <Column Name="LANCHE_NOME" DataType="System.String"/>
+        <Column Name="LANCHE_DESCRICAO_CURTA" DataType="System.String"/>
+        <Column Name="LANCHE_DESCRICAO_DETALHADA" DataType="System.String"/>
+        <Column Name="LANCHE_VALOR" DataType="System.Decimal"/>
+        <Column Name="LANCHE_IMAGE" DataType="System.String"/>
+        <Column Name="LANCHE_IMAGE_THUMB" DataType="System.String"/>
+        <Column Name="LANCHE_PREFERIDO" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="LANCHE_EM_ESTOQUE" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="LANCHE_CATEGORIA_ID" DataType="System.Int32"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Relation Name="TB_CATEGORIAS_TB_LANCHES" ParentDataSource="TB_CATEGORIAS" ChildDataSource="TB_LANCHES" ParentColumns="CATEGORIA_ID" ChildColumns="LANCHE_CATEGORIA_ID" Enabled="true"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text9" Left="37.8" Top="9.45" Width="642.6" Height="18.9" Text="Lanches por Categoria" HorzAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </ReportTitleBand>
+    <DataBand Name="Data1" Top="41.8" Width="718.2" Height="37.8" Fill.Color="Orange" StartNewPage="true" DataSource="TB_CATEGORIAS">
+      <TextObject Name="Text1" Left="9.45" Top="9.45" Width="264.6" Height="18.9" Text="[TB_CATEGORIAS.CATEGORIA_NOME]" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text3" Left="292.95" Top="9.45" Width="302.4" Height="18.9" Text="[TB_CATEGORIAS.CATEGORIA_DESCRICAO]" Font="Arial, 10pt"/>
+      <DataBand Name="Data2" Top="125.4" Width="718.2" Height="75.6" DataSource="TB_LANCHES">
+        <TextObject Name="Text4" Left="9.45" Top="9.45" Width="179.55" Height="66.15" Text="[TB_LANCHES.LANCHE_NOME]" Font="Arial, 8pt"/>
+        <TextObject Name="Text5" Left="226.8" Top="9.45" Width="226.8" Height="66.15" Text="[TB_LANCHES.LANCHE_DESCRICAO_CURTA]" Font="Arial, 8pt"/>
+        <TextObject Name="Text7" Left="491.4" Top="9.45" Width="113.4" Height="66.15" Text="[TB_LANCHES.LANCHE_VALOR]" Format="Currency" Format.UseLocale="true" Format.DecimalDigits="2" HorzAlign="Right" WordWrap="false" Font="Arial, 8pt" Trimming="EllipsisCharacter"/>
+        <PictureObject Name="Picture1" Left="633.15" Width="75.6" Height="75.6" DataColumn="TB_LANCHES.LANCHE_IMAGE"/>
+        <DataHeaderBand Name="DataHeader1" Top="83.6" Width="718.2" Height="37.8" Fill.Color="Peru">
+          <TextObject Name="Text2" Left="9.45" Top="9.45" Width="122.85" Height="18.9" Text="Nome do Lanche:" Font="Arial, 9pt, style=Bold"/>
+          <TextObject Name="Text6" Left="226.8" Top="9.45" Width="151.2" Height="18.9" Text="Descrição do Lanche:" Font="Arial, 9pt, style=Bold"/>
+          <TextObject Name="Text8" Left="491.4" Top="9.45" Width="113.4" Height="18.9" Text="Valor do lanche:" HorzAlign="Right" Font="Arial, 9pt, style=Bold"/>
+        </DataHeaderBand>
+      </DataBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="205" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>
