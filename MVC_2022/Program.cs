@@ -111,7 +111,7 @@ app.UseHttpsRedirection();
 
 //Permitir o acesso e também utilizado para servir arquivos estáticos(como HTML, CSS, JavaScript, imagens, entre outros)
 //diretamente do sistema de arquivos do servidor web ao cliente,
-//sem a necessidade de processamento adicional ou processamento do servidor.
+//sem a necessidade de processamento adicional ou processamento do servidor. 
 app.UseStaticFiles();
 app.UseFastReport();
 
