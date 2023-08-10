@@ -67,6 +67,7 @@ builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
 //Criando servico para injetar método no controller, como não tem interface.
 builder.Services.AddScoped<RelatorioVendasService>();
 builder.Services.AddScoped<GraficoVendasService>();
+builder.Services.AddScoped<RelatorioLanchesServices>();
 
 //Politica para adicionar os perfis.
 builder.Services.AddAuthorization(options =>

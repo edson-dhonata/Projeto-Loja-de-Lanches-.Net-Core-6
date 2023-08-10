@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="08/08/2023 23:16:05" ReportInfo.Modified="08/08/2023 23:42:52" ReportInfo.CreatorVersion="2023.2.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/08/2023 23:16:05" ReportInfo.Modified="08/08/2023 23:52:17" ReportInfo.CreatorVersion="2023.2.0.0">
   <Dictionary>
     <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqM7gJFg/iaLrqMhRfGy5lGgaaYiHNYVZJmJ0+/Ir/d2ZrMOmu2yLsYYwRItj4qJItYkTDz3oUd07RaHX/3ZjHSaIG6J3YR19w5ttAkAWCGm+P2g6vqmv8PPYss24h8A3/SVerkms4hO6A4kL8ReceuUF/PCOExI+2mULs/BFphZr+l2VHYMqMrU3XOXs9XokUeDafL8OkPGVIr75jo1jFSkDxMN3RrKmFnqkCnE9xEpA=">
       <TableDataSource Name="TB_CATEGORIAS" DataType="System.Int32" Enabled="true" TableName="TB_CATEGORIAS">
@@ -20,6 +20,7 @@
         <Column Name="LANCHE_CATEGORIA_ID" DataType="System.Int32"/>
       </TableDataSource>
     </MsSqlDataConnection>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqM7gJFg/iaLrqMhRfGy5lGgaaYiHNYVZJmJ0+/Ir/d2ZrMOmu2yLsYYwRItj4qJItYkTDz3oUd07RaHX/3ZjHSaIG6J3YR19w5ttAkAWCGm+P2g6vqmv8PPYss24h8A3/SVerkms4hO6A4kL8ReceuUF/PCOExI+2mULs/BFphZr+l2VHYMqMrU3XOXs9XokUeDafL8OkPGVIr75jo1jFSkDxMN3RrKmFnqkCnE9xEpA="/>
     <Relation Name="TB_CATEGORIAS_TB_LANCHES" ParentDataSource="TB_CATEGORIAS" ChildDataSource="TB_LANCHES" ParentColumns="CATEGORIA_ID" ChildColumns="LANCHE_CATEGORIA_ID" Enabled="true"/>
   </Dictionary>
   <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
