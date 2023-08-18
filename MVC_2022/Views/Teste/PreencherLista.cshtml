@@ -5,24 +5,40 @@
 }
 
 <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Nome:</th>
-      <th scope="col">Idade:</th>
-      <th scope="col">Data de Nascimento:</th>
-    </tr>
-  </thead>
-  <tbody>
-      @foreach (var item in Model)
-        {
-            <tr>
-              <td>@item.nome</td>
-              <td>@item.idade</td>
-              <td>@item.nascimento.ToString("dd/MM/yyyy")</td>
-            </tr>
+    <thead>
+        <tr>
+            <th scope="col">Nome:</th>
+            <th scope="col">Idade:</th>
+            <th scope="col">Data de Nascimento:</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            int i = 0;
         }
-  </tbody>
+
+        @foreach (var item in Model)
+        {
+            if(item.excluido == false)
+            {
+                <tr>
+                    <td>@item.nome</td>
+                    <td>@item.idade</td>
+                    <td>@item.nascimento.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm btnEdit" onclick="editar(@i);">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="excluir(@i);">Excluir</button>
+                    </td>
+                </tr>
+
+            }
+         
+            i++;
+        }
+    </tbody>
 </table>
 
-<textarea style="display: none;" id="hfLista" name="hfLista">@Html.Raw(Json.Serialize(Model))</textarea>
+<textarea  style="display:none;" id="hfLista" name="hfLista">@Html.Raw(Json.Serialize(Model))</textarea>
 

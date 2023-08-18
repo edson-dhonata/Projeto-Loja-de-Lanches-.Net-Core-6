@@ -5,5 +5,6 @@
         public string nome { get; set; }
         public int idade { get; set; }
         public DateTime nascimento { get; set; }
+        public bool excluido { get; set; }
     }
 }

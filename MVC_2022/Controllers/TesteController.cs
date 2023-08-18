@@ -32,6 +32,6 @@ namespace MVC_2022.Controllers
         public IActionResult Insert([FromBody] List<TesteLista> lista)
         {
             return View("~/Views/Teste/PreencherLista.cshtml", lista);
-        }
+        } 
     }
 }

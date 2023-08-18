@@ -38,7 +38,6 @@
 
     $(".btnEnviarDados").click(function () {
 
-        //var lista = $("#hfLista").val();
         var lista = JSON.parse($("#hfLista").val());
 
         var nome = $("#nome").val();
@@ -67,6 +66,55 @@
         });
 
     });
+    
+    function editar(index)
+    {
+        var lista = JSON.parse($("#hfLista").val());
 
+        var nome = $("#nome").val();
+        var idade = $("#idade").val();
+        var nascimento = $("#nascimento").val();
+
+        var novoItem = {
+            nome: nome,
+            idade: parseInt(idade),
+            nascimento: nascimento
+        };
+
+        lista[index] = novoItem;
+
+        $.ajax({
+            type: "POST",
+            url: "/Teste/Insert", // A URL do método no controlador que receberá os dados
+            contentType: "application/json", // Define o tipo de conteúdo como JSON
+            data: JSON.stringify(lista), // Os dados a serem enviados (serializados como JSON)
+            success: function (response) {
+                $(".lista").html(response);
+            },
+            error: function (xhr, status, error) {
+                console.log("Erro:", error);
+            }
+        });
+    }
+    
+    function excluir(index)
+    {        
+        var lista = JSON.parse($("#hfLista").val());
+
+        lista[index].excluido = true;
+
+        $.ajax({
+            type: "POST",
+            url: "/Teste/Insert", // A URL do método no controlador que receberá os dados
+            contentType: "application/json", // Define o tipo de conteúdo como JSON
+            data: JSON.stringify(lista), // Os dados a serem enviados (serializados como JSON)
+            success: function (response) {
+                $(".lista").html(response);
+            },
+            error: function (xhr, status, error) {
+                console.log("Erro:", error);
+            }
+        });
+    }
 
 </script>
